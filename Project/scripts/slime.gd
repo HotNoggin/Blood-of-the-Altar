@@ -2,6 +2,8 @@ class_name Enemy
 extends Entity
 
 @export var effect: OnceEffect
+@export var sound: AudioStream
+@export var pitch_randomization: float = 3
 
 
 func _ready():
@@ -11,6 +13,8 @@ func _ready():
 
 
 func kill():
-	Globals.timestop(0.1 , 0.2)
+	OnceSound.new_sibling(self, sound).play()
+	Globals.timestop(0.2 , 0.3)
 	play_effect_as_sibling(effect)
+	drop_loot()
 	queue_free()

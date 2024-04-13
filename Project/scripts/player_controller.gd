@@ -2,9 +2,9 @@ class_name PlayerController
 extends Node
 
 @export var speed: float = 120
-@export var kick_speed: float = 200
+@export var kick_speed: float = 170
 @export var cooldown_speed: float = 80
-@export var gravity: float = 9.8
+@export var gravity: float = 15
 @export var jump_force: float = 200
 @export var bounce_force: float = 80
 @export var jump_buffer_time: float = 0.25

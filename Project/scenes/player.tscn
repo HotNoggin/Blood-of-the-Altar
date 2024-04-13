@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://nwffwt5ijfkn"]
+[gd_scene load_steps=21 format=3 uid="uid://nwffwt5ijfkn"]
 
 [ext_resource type="Texture2D" uid="uid://cwad7g33eylj2" path="res://assets/graphics/player.png" id="1_p8apo"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_v6urg"]
@@ -6,12 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://dysj74ynugegf" path="res://assets/graphics/puff.png" id="3_752to"]
 [ext_resource type="Script" path="res://scripts/player_controller.gd" id="3_yt67k"]
 [ext_resource type="Script" path="res://scripts/hitbox.gd" id="4_m7ifo"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7yxfm"]
-size = Vector2(6, 14)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2tb2r"]
-size = Vector2(13, 7)
+[ext_resource type="Script" path="res://scripts/anchor_point.gd" id="6_5egdh"]
+[ext_resource type="AudioStream" uid="uid://orpvu0b7crug" path="res://assets/audio/step.wav" id="7_06xht"]
+[ext_resource type="AudioStream" uid="uid://dbvlcsyor2mfj" path="res://assets/audio/slide.wav" id="8_x1lp3"]
+[ext_resource type="Script" path="res://scripts/interactor.gd" id="10_e4l1f"]
 
 [sub_resource type="Animation" id="Animation_7gik7"]
 length = 0.001
@@ -96,7 +94,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_xq3og"]
 resource_name = "kick_cooldown"
-length = 0.2
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -108,6 +106,20 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../SlideStreamPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_p8ufq"]
@@ -126,6 +138,23 @@ tracks/0/keys = {
 "update": 1,
 "values": [4, 5, 6, 7]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../StepStreamPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f3d3o"]
 _data = {
@@ -138,6 +167,12 @@ _data = {
 "run": SubResource("Animation_p8ufq")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7yxfm"]
+size = Vector2(6, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2tb2r"]
+size = Vector2(13, 7)
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_controller", "hitbox", "walking_effect", "animator", "visuals")]
 collision_layer = 2
 collision_mask = 25
@@ -145,25 +180,9 @@ script = ExtResource("1_v6urg")
 player_controller = NodePath("PlayerController")
 hitbox = NodePath("Hitbox")
 walking_effect = NodePath("Visuals/GPUParticles2D")
+landing_sound = ExtResource("7_06xht")
 animator = NodePath("Visuals/AnimationPlayer")
 visuals = NodePath("Visuals")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_7yxfm")
-
-[node name="PlayerController" type="Node" parent="."]
-script = ExtResource("3_yt67k")
-gravity = 15.0
-
-[node name="Hitbox" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 4
-script = ExtResource("4_m7ifo")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(3.5, 3.5)
-shape = SubResource("RectangleShape2D_2tb2r")
 
 [node name="Visuals" type="Node2D" parent="."]
 
@@ -188,3 +207,30 @@ autoplay = "idle"
 
 [node name="HoldingAnchor" type="Marker2D" parent="Visuals"]
 position = Vector2(6, 0)
+script = ExtResource("6_5egdh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_7yxfm")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("4_m7ifo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(3.5, 3.5)
+shape = SubResource("RectangleShape2D_2tb2r")
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("3_yt67k")
+
+[node name="StepStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_06xht")
+
+[node name="SlideStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_x1lp3")
+volume_db = -10.0
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("10_e4l1f")

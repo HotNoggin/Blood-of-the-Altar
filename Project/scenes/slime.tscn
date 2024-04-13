@@ -1,11 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://dfuknvjvs8t"]
+[gd_scene load_steps=15 format=3 uid="uid://dfuknvjvs8t"]
 
 [ext_resource type="Texture2D" uid="uid://c3iajl3xx0g0" path="res://assets/graphics/slime.png" id="1_4xnw8"]
 [ext_resource type="Script" path="res://scripts/slime.gd" id="1_vx66d"]
 [ext_resource type="Script" path="res://scripts/hitbox.gd" id="3_7co1q"]
+[ext_resource type="PackedScene" uid="uid://cx80drhe3xbl3" path="res://scenes/bone.tscn" id="3_d2oay"]
 [ext_resource type="Script" path="res://scripts/hurtbox.gd" id="4_tcn50"]
 [ext_resource type="Script" path="res://scripts/once_effect.gd" id="5_2u6kf"]
 [ext_resource type="Material" uid="uid://byxjhvjatnj80" path="res://resources/splat_particles.tres" id="5_v5m5x"]
+[ext_resource type="AudioStream" uid="uid://bpmlw2a3nfa1p" path="res://assets/audio/crunch.wav" id="7_wi1ni"]
 
 [sub_resource type="Animation" id="Animation_aibas"]
 length = 0.001
@@ -58,9 +60,11 @@ size = Vector2(10, 6)
 collision_layer = 4
 script = ExtResource("1_vx66d")
 effect = NodePath("OnceEffect")
+sound = ExtResource("7_wi1ni")
 animator = NodePath("Visuals/AnimationPlayer")
 visuals = NodePath("Visuals")
 hurtbox = NodePath("Hurtbox")
+loot_drop = ExtResource("3_d2oay")
 
 [node name="Visuals" type="Node2D" parent="."]
 
@@ -104,3 +108,6 @@ process_material = ExtResource("5_v5m5x")
 lifetime = 0.4
 explosiveness = 1.0
 script = ExtResource("5_2u6kf")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_wi1ni")

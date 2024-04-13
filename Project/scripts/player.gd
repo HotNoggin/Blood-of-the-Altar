@@ -5,6 +5,7 @@ extends Entity
 @export var hitbox: Hitbox
 @export var walking_effect: GPUParticles2D
 @export var tilt_amount: float = 8
+@export var landing_sound: AudioStream
 
 var look_direction: int:
 	set(value):
@@ -22,13 +23,17 @@ func _ready():
 
 
 func _process(_delta):
-	# Graphics
+	# Flip graphics
 	if player_controller.is_moving():
 		look_direction = player_controller.get_movement_as_int()
-		visuals.rotation_degrees = abs( velocity.x ) / velocity.x * (- tilt_amount)
-	else:
-		visuals.rotation_degrees = 0
 	
+	# Tilt graphics
+	if is_zero_approx(velocity.x):
+		visuals.rotation_degrees = 0
+	else:
+		visuals.rotation_degrees = abs( velocity.x ) / velocity.x * (- tilt_amount)
+	
+	# Emit particles
 	walking_effect.emitting = true if not(is_zero_approx(velocity.x)) and is_on_floor() else false
 	
 	# Kicking and cooling down locks animation
@@ -78,7 +83,12 @@ func _physics_process(_delta):
 		velocity.y = - player_controller.jump_force
 	
 	# Move
+	var was_on_floor: bool = is_on_floor()
 	move_and_slide()
+	
+	# Play sound if the move just caused the player to land
+	if is_on_floor() and (not was_on_floor):
+		OnceSound.new_sibling(self, landing_sound).play()
 
 
 func is_kicking() -> bool:
