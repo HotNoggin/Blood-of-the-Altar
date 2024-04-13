@@ -31,6 +31,10 @@ func just_acted() -> bool:
 	return Input.is_action_just_pressed("act")
 
 
+func just_grabbed() -> bool:
+	return Input.is_action_just_pressed("grab")
+
+
 func get_movement_as_int() -> int:
 	if is_zero_approx(get_movement()):
 		return 0

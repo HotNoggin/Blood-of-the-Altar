@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://dfuknvjvs8t"]
 
 [ext_resource type="Texture2D" uid="uid://c3iajl3xx0g0" path="res://assets/graphics/slime.png" id="1_4xnw8"]
-[ext_resource type="Script" path="res://scripts/slime.gd" id="1_vx66d"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_44hh0"]
 [ext_resource type="Script" path="res://scripts/hitbox.gd" id="3_7co1q"]
 [ext_resource type="PackedScene" uid="uid://cx80drhe3xbl3" path="res://scenes/bone.tscn" id="3_d2oay"]
 [ext_resource type="Script" path="res://scripts/hurtbox.gd" id="4_tcn50"]
@@ -58,7 +58,7 @@ size = Vector2(10, 6)
 
 [node name="Slime" type="CharacterBody2D" node_paths=PackedStringArray("effect", "animator", "visuals", "hurtbox")]
 collision_layer = 4
-script = ExtResource("1_vx66d")
+script = ExtResource("1_44hh0")
 effect = NodePath("OnceEffect")
 sound = ExtResource("7_wi1ni")
 animator = NodePath("Visuals/AnimationPlayer")
@@ -103,6 +103,7 @@ shape = SubResource("RectangleShape2D_ri3uv")
 [node name="OnceEffect" type="GPUParticles2D" parent="."]
 modulate = Color(0.972549, 0.0705882, 0.0705882, 1)
 position = Vector2(0, 4)
+emitting = false
 amount = 16
 process_material = ExtResource("5_v5m5x")
 lifetime = 0.4

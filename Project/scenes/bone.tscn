@@ -6,6 +6,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_xdo2x"]
 
 [node name="Bone" type="Area2D"]
+collision_layer = 32
+collision_mask = 2
 script = ExtResource("1_aahcp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -13,3 +15,4 @@ shape = SubResource("CircleShape2D_xdo2x")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_1yjkm")
+flip_h = true
