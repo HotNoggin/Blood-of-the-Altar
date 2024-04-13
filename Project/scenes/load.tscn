@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://b21u6xog76rmo"]
+
+[ext_resource type="Script" path="res://scripts/load.gd" id="1_v3n7p"]
+[ext_resource type="Theme" uid="uid://ddqr3lgp5lfdu" path="res://resources/default_theme.tres" id="2_0wbg6"]
+[ext_resource type="Material" uid="uid://cnoxrtkaixbtt" path="res://resources/arena_particles.tres" id="2_s4do3"]
+[ext_resource type="Material" uid="uid://byxjhvjatnj80" path="res://resources/splat_particles.tres" id="3_5arlp"]
+
+[node name="Load" type="Node2D"]
+script = ExtResource("1_v3n7p")
+process_materials = Array[ParticleProcessMaterial]([ExtResource("2_s4do3"), ExtResource("3_5arlp")])
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12549, 0.0117647, 0.0745098, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -7.5
+offset_right = 20.0
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_0wbg6")
+theme_override_colors/font_color = Color(0.913725, 0.878431, 0.666667, 1)
+theme_override_font_sizes/font_size = 90
+text = "LOADING..."

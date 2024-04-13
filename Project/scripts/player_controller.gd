@@ -1,9 +1,12 @@
 class_name PlayerController
 extends Node
 
-@export var speed: float = 6000
+@export var speed: float = 120
+@export var kick_speed: float = 200
+@export var cooldown_speed: float = 80
 @export var gravity: float = 9.8
 @export var jump_force: float = 200
+@export var bounce_force: float = 80
 @export var jump_buffer_time: float = 0.25
 
 var jump_buffer: float = jump_buffer_time + 1
@@ -22,6 +25,10 @@ func get_movement() -> float:
 func is_jump_buffered() -> bool:
 	# True if the buffer has not exceeded the jump buffer time
 	return jump_buffer <= jump_buffer_time
+
+
+func just_acted() -> bool:
+	return Input.is_action_just_pressed("act")
 
 
 func get_movement_as_int() -> int:

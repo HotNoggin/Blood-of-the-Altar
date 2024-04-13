@@ -1,0 +1,106 @@
+[gd_scene load_steps=13 format=3 uid="uid://dfuknvjvs8t"]
+
+[ext_resource type="Texture2D" uid="uid://c3iajl3xx0g0" path="res://assets/graphics/slime.png" id="1_4xnw8"]
+[ext_resource type="Script" path="res://scripts/slime.gd" id="1_vx66d"]
+[ext_resource type="Script" path="res://scripts/hitbox.gd" id="3_7co1q"]
+[ext_resource type="Script" path="res://scripts/hurtbox.gd" id="4_tcn50"]
+[ext_resource type="Script" path="res://scripts/once_effect.gd" id="5_2u6kf"]
+[ext_resource type="Material" uid="uid://byxjhvjatnj80" path="res://resources/splat_particles.tres" id="5_v5m5x"]
+
+[sub_resource type="Animation" id="Animation_aibas"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_f3k61"]
+resource_name = "squish"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vheqi"]
+_data = {
+"RESET": SubResource("Animation_aibas"),
+"squish": SubResource("Animation_f3k61")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8jgm7"]
+size = Vector2(14, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oexd7"]
+size = Vector2(16, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ri3uv"]
+size = Vector2(10, 6)
+
+[node name="Slime" type="CharacterBody2D" node_paths=PackedStringArray("effect", "animator", "visuals", "hurtbox")]
+collision_layer = 4
+script = ExtResource("1_vx66d")
+effect = NodePath("OnceEffect")
+animator = NodePath("Visuals/AnimationPlayer")
+visuals = NodePath("Visuals")
+hurtbox = NodePath("Hurtbox")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("1_4xnw8")
+hframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals"]
+libraries = {
+"": SubResource("AnimationLibrary_vheqi")
+}
+autoplay = "squish"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_8jgm7")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("3_7co1q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_oexd7")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("4_tcn50")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_ri3uv")
+
+[node name="OnceEffect" type="GPUParticles2D" parent="."]
+modulate = Color(0.972549, 0.0705882, 0.0705882, 1)
+position = Vector2(0, 4)
+amount = 16
+process_material = ExtResource("5_v5m5x")
+lifetime = 0.4
+explosiveness = 1.0
+script = ExtResource("5_2u6kf")

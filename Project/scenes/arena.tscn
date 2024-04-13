@@ -1,38 +1,81 @@
-[gd_scene load_steps=7 format=3 uid="uid://cuht163fmkxpu"]
+[gd_scene load_steps=12 format=3 uid="uid://cuht163fmkxpu"]
 
 [ext_resource type="PackedScene" uid="uid://nwffwt5ijfkn" path="res://scenes/player.tscn" id="1_2bthp"]
-[ext_resource type="Texture2D" uid="uid://358d6xqn2v64" path="res://assets/graphics/bricks.png" id="2_bfd7q"]
+[ext_resource type="TileSet" uid="uid://cn568n6j2tt13" path="res://resources/arena_tileset.tres" id="1_6skdb"]
 [ext_resource type="PackedScene" uid="uid://b4k24c558s21b" path="res://scenes/altar.tscn" id="3_ky7m4"]
+[ext_resource type="PackedScene" uid="uid://dfuknvjvs8t" path="res://scenes/slime.tscn" id="4_3eoi1"]
+[ext_resource type="Material" uid="uid://cnoxrtkaixbtt" path="res://resources/arena_particles.tres" id="5_n4m3o"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bb0ps"]
-resource_name = "Bricks"
-texture = ExtResource("2_bfd7q")
-0:0/0 = 0
-1:0/0 = 0
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_grla1"]
+size = Vector2(384, 216)
 
-[sub_resource type="TileSet" id="TileSet_cqlbx"]
-sources/0 = SubResource("TileSetAtlasSource_bb0ps")
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gq6d5"]
+distance = -32.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fr2ub"]
+normal = Vector2(1, 0)
+distance = -192.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f1dja"]
-distance = 8.0
+normal = Vector2(-1, 0)
+distance = -192.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4muyr"]
+normal = Vector2(0, 1)
+distance = -104.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ubr1r"]
+distance = -32.0
 
 [node name="Arena" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="View" type="Sprite2D" parent="."]
+clip_children = 1
+texture = SubResource("PlaceholderTexture2D_grla1")
+
+[node name="Camera2D" type="Camera2D" parent="View"]
 zoom = Vector2(3, 3)
 
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = SubResource("TileSet_cqlbx")
+[node name="Player Bounds" type="StaticBody2D" parent="View"]
+collision_layer = 16
+collision_mask = 2
+
+[node name="Bottom" type="CollisionShape2D" parent="View/Player Bounds"]
+shape = SubResource("WorldBoundaryShape2D_gq6d5")
+
+[node name="Left" type="CollisionShape2D" parent="View/Player Bounds"]
+shape = SubResource("WorldBoundaryShape2D_fr2ub")
+
+[node name="Right" type="CollisionShape2D" parent="View/Player Bounds"]
+shape = SubResource("WorldBoundaryShape2D_f1dja")
+
+[node name="Top" type="CollisionShape2D" parent="View/Player Bounds"]
+shape = SubResource("WorldBoundaryShape2D_4muyr")
+
+[node name="Ground" type="StaticBody2D" parent="View"]
+collision_mask = 14
+
+[node name="Bottom" type="CollisionShape2D" parent="View/Ground"]
+shape = SubResource("WorldBoundaryShape2D_ubr1r")
+
+[node name="TileMap" type="TileMap" parent="View"]
+tile_set = ExtResource("1_6skdb")
 format = 2
 layer_0/tile_data = PackedInt32Array(131060, 65536, 0, 131061, 65536, 0, 131064, 65536, 0, 131067, 65536, 0, 131070, 65536, 0, 131071, 65536, 0, 65539, 65536, 0, 65542, 65536, 0, 65543, 65536, 0, 65545, 65536, 0, 65547, 65536, 0, 196596, 0, 0, 196597, 0, 0, 196598, 0, 0, 196599, 0, 0, 196600, 0, 0, 196601, 0, 0, 196602, 0, 0, 196603, 0, 0, 196604, 0, 0, 196605, 0, 0, 196606, 0, 0, 196607, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 131083, 0, 0)
 
-[node name="Altar" parent="." instance=ExtResource("3_ky7m4")]
+[node name="Altar" parent="View" instance=ExtResource("3_ky7m4")]
 position = Vector2(0, 24)
 
-[node name="Player" parent="." instance=ExtResource("1_2bthp")]
+[node name="Slime" parent="View" instance=ExtResource("4_3eoi1")]
+position = Vector2(-72, 24)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Player" parent="View" instance=ExtResource("1_2bthp")]
+position = Vector2(0, 16)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(0, 40)
-shape = SubResource("WorldBoundaryShape2D_f1dja")
+[node name="GPUParticles2D" type="GPUParticles2D" parent="View"]
+modulate = Color(0.972549, 0.0705882, 0.0705882, 1)
+position = Vector2(0, -48)
+amount = 80
+process_material = ExtResource("5_n4m3o")
+lifetime = 10.0
+preprocess = 10.0

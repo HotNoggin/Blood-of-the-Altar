@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ddqr3lgp5lfdu"]
+
+[ext_resource type="FontFile" uid="uid://dk3y6k5ovtdw2" path="res://resources/QuestyFont.ttf" id="1_sci5i"]
+
+[resource]
+default_font = ExtResource("1_sci5i")
+default_font_size = 9
