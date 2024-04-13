@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4k24c558s21b"]
+
+[ext_resource type="Texture2D" uid="uid://df01m687n5uo6" path="res://assets/graphics/altar.png" id="1_xxbb1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6et5x"]
+size = Vector2(24, 16)
+
+[node name="Altar" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6et5x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xxbb1")

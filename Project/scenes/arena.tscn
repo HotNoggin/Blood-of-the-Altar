@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://cuht163fmkxpu"]
+
+[ext_resource type="PackedScene" uid="uid://nwffwt5ijfkn" path="res://scenes/player.tscn" id="1_2bthp"]
+[ext_resource type="Texture2D" uid="uid://358d6xqn2v64" path="res://assets/graphics/bricks.png" id="2_bfd7q"]
+[ext_resource type="PackedScene" uid="uid://b4k24c558s21b" path="res://scenes/altar.tscn" id="3_ky7m4"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bb0ps"]
+resource_name = "Bricks"
+texture = ExtResource("2_bfd7q")
+0:0/0 = 0
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_cqlbx"]
+sources/0 = SubResource("TileSetAtlasSource_bb0ps")
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f1dja"]
+distance = 8.0
+
+[node name="Arena" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_cqlbx")
+format = 2
+layer_0/tile_data = PackedInt32Array(131060, 65536, 0, 131061, 65536, 0, 131064, 65536, 0, 131067, 65536, 0, 131070, 65536, 0, 131071, 65536, 0, 65539, 65536, 0, 65542, 65536, 0, 65543, 65536, 0, 65545, 65536, 0, 65547, 65536, 0, 196596, 0, 0, 196597, 0, 0, 196598, 0, 0, 196599, 0, 0, 196600, 0, 0, 196601, 0, 0, 196602, 0, 0, 196603, 0, 0, 196604, 0, 0, 196605, 0, 0, 196606, 0, 0, 196607, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 131083, 0, 0)
+
+[node name="Altar" parent="." instance=ExtResource("3_ky7m4")]
+position = Vector2(0, 24)
+
+[node name="Player" parent="." instance=ExtResource("1_2bthp")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 40)
+shape = SubResource("WorldBoundaryShape2D_f1dja")
