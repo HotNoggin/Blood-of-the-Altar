@@ -46,5 +46,5 @@ func face_direction() -> void:
 		visuals.scale = Vector2.ONE if direction.x > 0 else - Vector2.ONE
 
 
-func apply_gravity() -> void:
-	velocity.y += gravity
+func apply_gravity(delta) -> void:
+	velocity.y += gravity * delta

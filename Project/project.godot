@@ -14,7 +14,7 @@ config/name="Ludum Dare 55"
 config/tags=PackedStringArray("active", "jame_jam")
 run/main_scene="res://scenes/load.tscn"
 config/features=PackedStringArray("4.2")
-run/max_fps=60
+run/max_fps=30
 config/icon="res://assets/graphics/icon.png"
 
 [autoload]

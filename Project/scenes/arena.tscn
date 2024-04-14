@@ -16,11 +16,11 @@ distance = -32.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fr2ub"]
 normal = Vector2(1, 0)
-distance = -192.0
+distance = -184.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f1dja"]
 normal = Vector2(-1, 0)
-distance = -192.0
+distance = -184.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4muyr"]
 normal = Vector2(0, 1)
@@ -79,14 +79,14 @@ position = Vector2(-208, 24)
 script = ExtResource("3_eblnm")
 scene = ExtResource("4_3eoi1")
 initial_time = 0.0
-wait_time = 2.0
+wait_time = 4.0
 
 [node name="SlimeSpawner2D2" type="Marker2D" parent="View/Spawners"]
 position = Vector2(208, 24)
 script = ExtResource("3_eblnm")
 scene = ExtResource("4_3eoi1")
 initial_time = 0.0
-wait_time = 2.0
+wait_time = 4.0
 
 [node name="Altar" parent="View" instance=ExtResource("3_ky7m4")]
 position = Vector2(0, 24)

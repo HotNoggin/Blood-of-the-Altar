@@ -77,47 +77,32 @@ func _process(_delta):
 	visuals.modulate = Color(1, 1, 1, 0.5) if is_invincible else Color.WHITE
 
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	if not is_alive:
 		return
 	
-	# Kicking locks the player in the animation and enables hitbox
+	# Kicking locks the player in the animation and sets hitboxes
 	if is_kicking():
-		hitbox.is_active = true
-		hurtbox.is_active = false
-		move_and_slide()
+		_handle_kicking()
 		return
+	# Set hitboxes while not kicking
 	else:
-		hitbox.is_active = false
-		hurtbox.is_active = true
-		Altar.instance.hurtbox.is_active = true
+		_handle_not_kicking_hitboxes()
 	
 	# Cooling down locks the player in the animation with gravity
 	if is_cooling_down():
-		velocity.x = look_direction * player_controller.cooldown_speed
-		velocity.y += player_controller.gravity
-		move_and_slide()
+		_handle_cooldown(delta)
 		return
 
 	if player_controller.just_acted():
-		# Drop item
-		if anchor.is_holding():
-			anchor.drop_held_holdable()
-		# Kick
-		else:
-			velocity.x = player_controller.kick_speed * look_direction
-			velocity.y = 0
-			play_safe("kick")
-			hitbox.is_active = true
-			hurtbox.is_active = false
-			move_and_slide()
-			return
+		drop_item_or_kick()
+		return
 	
 	# Summon at the altar
 	if anchor.is_holding():
 		if interactor.is_altar_selected():
-			interactor.altar.sacrifice(interactor.selected_holdable)
-			anchor.drop_held_holdable()
+			interactor.altar.sacrifice(anchor.holdable)
+			anchor.drop_held_holdable.call_deferred()
 	
 	# Grab item
 	elif player_controller.just_grabbed() and not anchor.is_holding():
@@ -125,7 +110,7 @@ func _physics_process(_delta):
 			anchor.grab_holdable(interactor.selected_holdable)
 	
 	# Fall
-	velocity.y += player_controller.gravity
+	velocity.y += player_controller.gravity * delta
 	
 	# Get movemement
 	if (not is_kicking()) and (not is_cooling_down()):
@@ -144,7 +129,41 @@ func _physics_process(_delta):
 		OnceSound.new_sibling(self, landing_sound).play()
 
 
-func die():
+func drop_item_or_kick() -> void:
+	# Drop item
+	if anchor.is_holding():
+		anchor.drop_held_holdable()
+		return
+	# Kick
+	else:
+		velocity.x = player_controller.kick_speed * look_direction
+		velocity.y = 0
+		play_safe("kick")
+		hitbox.is_active = true
+		hurtbox.is_active = false
+		move_and_slide()
+
+
+func _handle_not_kicking_hitboxes() -> void:
+	hitbox.is_active = false
+	hurtbox.is_active = true
+	Altar.instance.hurtbox.is_active = true
+
+
+func _handle_cooldown(delta) -> void:
+	velocity.x = look_direction * player_controller.cooldown_speed
+	velocity.y += player_controller.gravity * delta
+	move_and_slide()
+
+
+func _handle_kicking() -> void:
+	hitbox.is_active = true
+	hurtbox.is_active = false
+	move_and_slide()
+	return
+
+
+func die() -> void:
 	if not is_alive:
 		return
 	
