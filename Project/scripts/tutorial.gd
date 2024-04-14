@@ -53,6 +53,12 @@ func do_tutorial():
 		label.text = ""
 		create_tween().tween_property(graphic, "modulate", Color.TRANSPARENT, 0.4)
 		return
+	else:
+		has_moved = false
+		has_kicked = false
+		has_grabbed = false
+		has_sacrificed = false
+
 	
 	# Pause spawners
 	spawners.process_mode = Node.PROCESS_MODE_DISABLED

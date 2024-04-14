@@ -29,11 +29,15 @@ func _ready():
 	_enemy_ready()
 
 
-func _enemy_ready():
+func _enemy_ready() -> void:
 	pass
 
 
-func _reached_altar_or_player():
+func _spawn_in() -> void:
+	pass
+
+
+func _reached_altar_or_player() -> void:
 	pass
 
 

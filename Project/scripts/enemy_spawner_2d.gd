@@ -14,4 +14,5 @@ func _on_timer_timeout():
 	var instance: Enemy = scene.instantiate() as Enemy
 	add_sibling(instance)
 	instance.global_position = global_position
+	instance._spawn_in()
 	get_tree().create_timer(wait_time).timeout.connect(_on_timer_timeout)

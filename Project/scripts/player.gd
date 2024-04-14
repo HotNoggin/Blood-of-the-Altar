@@ -89,6 +89,9 @@ func _physics_process(delta):
 	if not is_alive:
 		return
 	
+	# Tick score
+	ScoreTimer.time_this_round += delta
+	
 	# Kicking locks the player in the animation and sets hitboxes
 	if is_kicking():
 		_handle_kicking()

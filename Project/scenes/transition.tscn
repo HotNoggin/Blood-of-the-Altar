@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dacpx6a0j7ogl"]
+[gd_scene load_steps=10 format=3 uid="uid://dacpx6a0j7ogl"]
 
 [ext_resource type="Theme" uid="uid://ddqr3lgp5lfdu" path="res://resources/default_theme.tres" id="1_f76w6"]
 [ext_resource type="Script" path="res://scripts/transition.gd" id="1_kscnw"]
 [ext_resource type="PackedScene" uid="uid://cuht163fmkxpu" path="res://scenes/arena.tscn" id="2_qmsot"]
+[ext_resource type="PackedScene" uid="uid://cgp1kl0ep2lgk" path="res://scenes/score.tscn" id="3_jpfgd"]
 
 [sub_resource type="Animation" id="Animation_rlxgo"]
 length = 0.001
@@ -98,8 +99,11 @@ _data = {
 }
 
 [node name="Transition" type="CanvasLayer" node_paths=PackedStringArray("animator")]
+process_mode = 3
+layer = 3
 script = ExtResource("1_kscnw")
 arena_scene = ExtResource("2_qmsot")
+score_scene = ExtResource("3_jpfgd")
 animator = NodePath("AnimationPlayer")
 
 [node name="ColorRect" type="ColorRect" parent="."]

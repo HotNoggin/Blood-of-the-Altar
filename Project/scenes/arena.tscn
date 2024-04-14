@@ -104,11 +104,32 @@ scene = ExtResource("4_3eoi1")
 initial_time = 0.0
 wait_time = 4.0
 
+[node name="SlimeSpawner2D3" type="Marker2D" parent="View/Spawners"]
+position = Vector2(-208, 24)
+script = ExtResource("3_eblnm")
+scene = ExtResource("4_3eoi1")
+initial_time = 22.0
+wait_time = 4.0
+
+[node name="SlimeSpawner2D4" type="Marker2D" parent="View/Spawners"]
+position = Vector2(208, 24)
+script = ExtResource("3_eblnm")
+scene = ExtResource("4_3eoi1")
+initial_time = 22.0
+wait_time = 4.0
+
 [node name="SkullSpawner2D" type="Marker2D" parent="View/Spawners"]
 position = Vector2(0, -120)
 script = ExtResource("3_eblnm")
 scene = ExtResource("5_cl7mm")
-initial_time = 12.0
+initial_time = 18.0
+wait_time = 6.0
+
+[node name="SkullSpawner2D2" type="Marker2D" parent="View/Spawners"]
+position = Vector2(0, -120)
+script = ExtResource("3_eblnm")
+scene = ExtResource("5_cl7mm")
+initial_time = 63.0
 wait_time = 6.0
 
 [node name="Altar" parent="View" instance=ExtResource("3_ky7m4")]
