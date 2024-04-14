@@ -7,6 +7,7 @@ extends Entity
 @export var speed: float = 15
 @export var gravity: float = 12
 @export var hitbox: Hitbox
+@export var die_on_contact: bool = false
 
 var dead: bool = false
 
@@ -21,6 +22,8 @@ func _ready():
 	hitbox.hurtbox_entered.connect(func(collided_box: Hurtbox):
 		if collided_box is PlayerTeamHurtbox:
 			_reached_altar_or_player()
+		if die_on_contact:
+			die(false)
 		)
 	
 	_enemy_ready()
@@ -34,16 +37,17 @@ func _reached_altar_or_player():
 	pass
 
 
-func die():
+func die(to_drop_loot: bool = true):
 	OnceSound.new_sibling(self, death_sound).play()
 	play_effect_as_sibling(death_effect)
-	drop_loot()
+	if to_drop_loot:
+		drop_loot()
 	queue_free()
 
 
 func face_direction() -> void:
 	if not is_zero_approx(direction.x):
-		visuals.scale = Vector2.ONE if direction.x > 0 else - Vector2.ONE
+		visuals.scale.x = 1 if direction.x > 0 else - 1
 
 
 func apply_gravity(delta) -> void:

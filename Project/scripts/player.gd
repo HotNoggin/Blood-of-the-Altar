@@ -93,21 +93,13 @@ func _physics_process(delta):
 	if is_cooling_down():
 		_handle_cooldown(delta)
 		return
-
+	
+	# The kick buton has two uses
 	if player_controller.just_acted():
-		drop_item_or_kick()
+		_drop_item_or_kick()
 		return
 	
-	# Summon at the altar
-	if anchor.is_holding():
-		if interactor.is_altar_selected():
-			interactor.altar.sacrifice(anchor.holdable)
-			anchor.drop_held_holdable.call_deferred()
-	
-	# Grab item
-	elif player_controller.just_grabbed() and not anchor.is_holding():
-		if interactor.is_selected():
-			anchor.grab_holdable(interactor.selected_holdable)
+	_summon_or_grab_holdable()
 	
 	# Fall
 	velocity.y += player_controller.gravity * delta
@@ -129,7 +121,7 @@ func _physics_process(delta):
 		OnceSound.new_sibling(self, landing_sound).play()
 
 
-func drop_item_or_kick() -> void:
+func _drop_item_or_kick() -> void:
 	# Drop item
 	if anchor.is_holding():
 		anchor.drop_held_holdable()
@@ -142,6 +134,20 @@ func drop_item_or_kick() -> void:
 		hitbox.is_active = true
 		hurtbox.is_active = false
 		move_and_slide()
+
+
+func _summon_or_grab_holdable() -> void:
+	# Summon at the altar
+	if anchor.is_holding():
+		if interactor.is_altar_selected():
+			interactor.altar.sacrifice(anchor.holdable)
+			anchor.drop_held_holdable.call_deferred()
+		return
+	
+	# Grab item
+	if player_controller.just_grabbed() and not anchor.is_holding():
+		if interactor.is_selected():
+			anchor.grab_holdable(interactor.selected_holdable)
 
 
 func _handle_not_kicking_hitboxes() -> void:
@@ -159,6 +165,7 @@ func _handle_cooldown(delta) -> void:
 func _handle_kicking() -> void:
 	hitbox.is_active = true
 	hurtbox.is_active = false
+	hitbox.trigger_hit()
 	move_and_slide()
 	return
 

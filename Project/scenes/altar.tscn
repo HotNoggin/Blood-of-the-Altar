@@ -67,6 +67,7 @@ script = ExtResource("3_iwk1e")
 
 [node name="DeathEffect" type="GPUParticles2D" parent="."]
 modulate = Color(0.972549, 0.0705882, 0.0705882, 1)
+show_behind_parent = true
 emitting = false
 amount = 1000
 process_material = ExtResource("5_2mv7r")

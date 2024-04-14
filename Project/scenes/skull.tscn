@@ -1,0 +1,123 @@
+[gd_scene load_steps=16 format=3 uid="uid://b74303q1slpey"]
+
+[ext_resource type="Script" path="res://scripts/skull.gd" id="1_cwcfs"]
+[ext_resource type="AudioStream" uid="uid://bpmlw2a3nfa1p" path="res://assets/audio/crunch.wav" id="2_1o7ax"]
+[ext_resource type="PackedScene" uid="uid://cx80drhe3xbl3" path="res://scenes/bone.tscn" id="3_b3nul"]
+[ext_resource type="Material" uid="uid://721gadk5tch" path="res://resources/flame_particles.tres" id="4_0mj0a"]
+[ext_resource type="Texture2D" uid="uid://cvfcumobsmvc" path="res://assets/graphics/skull.png" id="4_apuuc"]
+[ext_resource type="Script" path="res://scripts/hitbox.gd" id="5_t77ls"]
+[ext_resource type="Script" path="res://scripts/hurtbox.gd" id="6_mu1lq"]
+[ext_resource type="Material" uid="uid://byxjhvjatnj80" path="res://resources/splat_particles.tres" id="7_7p8o6"]
+[ext_resource type="Script" path="res://scripts/once_effect.gd" id="8_d2o2e"]
+
+[sub_resource type="Animation" id="Animation_6kjko"]
+resource_name = "float"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -1), Vector2(0, 1), Vector2(0, -1)]
+}
+
+[sub_resource type="Animation" id="Animation_8q3xm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_46fvs"]
+_data = {
+"RESET": SubResource("Animation_8q3xm"),
+"float": SubResource("Animation_6kjko")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8jgm7"]
+size = Vector2(10, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oexd7"]
+size = Vector2(6, 7)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ri3uv"]
+size = Vector2(14, 16)
+
+[node name="Skull" type="CharacterBody2D" node_paths=PackedStringArray("death_effect", "hitbox", "animator", "visuals", "hurtbox")]
+collision_layer = 4
+script = ExtResource("1_cwcfs")
+death_effect = NodePath("OnceEffect")
+death_sound = ExtResource("2_1o7ax")
+speed = 40.0
+gravity = 0.0
+hitbox = NodePath("Hitbox")
+animator = NodePath("Visuals/AnimationPlayer")
+visuals = NodePath("Visuals")
+hurtbox = NodePath("Hurtbox")
+loot_drop = ExtResource("3_b3nul")
+drop_chance = 1.0
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Visuals"]
+modulate = Color(0.972549, 0.0705882, 0.0705882, 1)
+amount = 20
+process_material = ExtResource("4_0mj0a")
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("4_apuuc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals"]
+libraries = {
+"": SubResource("AnimationLibrary_46fvs")
+}
+autoplay = "float"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_8jgm7")
+
+[node name="Hitbox" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+collision_mask = 10
+script = ExtResource("5_t77ls")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_oexd7")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+collision_mask = 10
+script = ExtResource("6_mu1lq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_ri3uv")
+
+[node name="OnceEffect" type="GPUParticles2D" parent="."]
+modulate = Color(0.972549, 0.0705882, 0.0705882, 1)
+position = Vector2(0, 4)
+emitting = false
+amount = 16
+process_material = ExtResource("7_7p8o6")
+lifetime = 0.4
+explosiveness = 1.0
+script = ExtResource("8_d2o2e")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_1o7ax")

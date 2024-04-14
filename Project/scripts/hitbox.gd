@@ -12,3 +12,9 @@ func _ready():
 		if is_active:
 			if area is Hurtbox:
 				if area.is_active: hurtbox_entered.emit(area))
+
+
+func trigger_hit() -> void:
+	for area in get_overlapping_areas():
+		if area is Hurtbox:
+			area.hitbox_entered.emit(self)
