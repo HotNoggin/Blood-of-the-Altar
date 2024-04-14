@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://b4k24c558s21b"]
+[gd_scene load_steps=12 format=3 uid="uid://b4k24c558s21b"]
 
 [ext_resource type="Script" path="res://scripts/altar.gd" id="1_ped2u"]
 [ext_resource type="Texture2D" uid="uid://df01m687n5uo6" path="res://assets/graphics/altar.png" id="1_xxbb1"]
+[ext_resource type="PackedScene" uid="uid://ypgmn5rl227g" path="res://scenes/bullet.tscn" id="2_aftcp"]
 [ext_resource type="AudioStream" uid="uid://b8bkdxv6ln814" path="res://assets/audio/sacrifice.wav" id="2_s051c"]
 [ext_resource type="Material" uid="uid://b5lutnngprnqm" path="res://resources/altar_particles.tres" id="3_2ad5j"]
 [ext_resource type="AudioStream" uid="uid://d40pwxre505n" path="res://assets/audio/death.wav" id="3_2igyc"]
@@ -19,6 +20,7 @@ size = Vector2(10, 6)
 collision_layer = 8
 collision_mask = 38
 script = ExtResource("1_ped2u")
+scene_pool = Array[PackedScene]([ExtResource("2_aftcp")])
 hurtbox = NodePath("AltarHurtbox")
 sacrifice_effect = NodePath("SacrificeEffect")
 hurt_effect = NodePath("HurtEffect")

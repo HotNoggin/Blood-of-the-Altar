@@ -36,6 +36,12 @@ func sacrifice(item: Holdable) -> void:
 		item.queue_free()
 		sacrifice_effect.duplicate_and_play()
 		OnceSound.new_sibling(self, sacrifice_sound).play()
+		# Summon a random scene
+		if not scene_pool.is_empty():
+			var node_instance: Node2D
+			node_instance = (scene_pool.pick_random() as PackedScene).instantiate() as Node2D
+			add_sibling(node_instance)
+			node_instance.global_position = global_position
 
 
 func hurt() -> void:

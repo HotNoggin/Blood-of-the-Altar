@@ -108,6 +108,8 @@ func _physics_process(_delta):
 			velocity.x = player_controller.kick_speed * look_direction
 			velocity.y = 0
 			play_safe("kick")
+			hitbox.is_active = true
+			hurtbox.is_active = false
 			move_and_slide()
 			return
 	
@@ -117,7 +119,8 @@ func _physics_process(_delta):
 			interactor.altar.sacrifice(interactor.selected_holdable)
 			anchor.drop_held_holdable()
 	
-	if player_controller.just_grabbed() and not anchor.is_holding():
+	# Grab item
+	elif player_controller.just_grabbed() and not anchor.is_holding():
 		if interactor.is_selected():
 			anchor.grab_holdable(interactor.selected_holdable)
 	

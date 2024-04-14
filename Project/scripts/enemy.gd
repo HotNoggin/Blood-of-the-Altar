@@ -36,7 +36,6 @@ func _reached_altar_or_player():
 
 func die():
 	OnceSound.new_sibling(self, death_sound).play()
-	Globals.timestop(0.2 , 0.3)
 	play_effect_as_sibling(death_effect)
 	drop_loot()
 	queue_free()

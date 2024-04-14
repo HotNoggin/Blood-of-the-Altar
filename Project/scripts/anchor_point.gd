@@ -30,4 +30,4 @@ func drop_held_holdable() -> void:
 
 
 func is_holding() -> bool:
-	return is_instance_valid(holdable)
+	return holdable != null
