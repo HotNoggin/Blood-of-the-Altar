@@ -64,11 +64,11 @@ death_sound = ExtResource("2_1o7ax")
 speed = 40.0
 gravity = 0.0
 hitbox = NodePath("Hitbox")
+die_on_contact = true
 animator = NodePath("Visuals/AnimationPlayer")
 visuals = NodePath("Visuals")
 hurtbox = NodePath("Hurtbox")
 loot_drop = ExtResource("3_b3nul")
-drop_chance = 1.0
 
 [node name="Visuals" type="Node2D" parent="."]
 

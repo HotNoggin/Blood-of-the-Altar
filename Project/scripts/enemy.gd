@@ -37,7 +37,7 @@ func _reached_altar_or_player():
 	pass
 
 
-func die(to_drop_loot: bool = true):
+func die(to_drop_loot: bool = true) -> void:
 	OnceSound.new_sibling(self, death_sound).play()
 	play_effect_as_sibling(death_effect)
 	if to_drop_loot:

@@ -36,6 +36,12 @@ func sacrifice(item: Holdable) -> void:
 		item.queue_free()
 		sacrifice_effect.duplicate_and_play()
 		OnceSound.new_sibling(self, sacrifice_sound).play()
+		
+		# Tutorial update
+		if not Tutorial.has_sacrificed:
+			Player.instance.sacrificed_first.emit()
+			Tutorial.has_sacrificed = true
+		
 		# Summon a random scene
 		if not scene_pool.is_empty():
 			var node_instance: Node2D

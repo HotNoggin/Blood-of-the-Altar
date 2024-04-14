@@ -1,5 +1,10 @@
 extends Enemy
 
+@export var spawn_range: float = 192
+
+
+func _enemy_ready():
+	position.x += randf_range(-spawn_range, spawn_range)
 
 func _physics_process(_delta):
 	if is_instance_valid(Player.instance):

@@ -1,6 +1,11 @@
 class_name Player
 extends Entity
 
+signal moved_first
+signal kicked_enemy_first
+signal grabbed_bone_first
+signal sacrificed_first
+
 static var instance: Player
 
 @export_group("Components")
@@ -51,6 +56,9 @@ func _process(_delta):
 	
 	# Flip graphics
 	if player_controller.is_moving():
+		if not Tutorial.has_moved:
+			moved_first.emit()
+			Tutorial.has_moved = true
 		look_direction = player_controller.get_movement_as_int()
 	
 	# Tilt graphics
@@ -147,6 +155,9 @@ func _summon_or_grab_holdable() -> void:
 	# Grab item
 	if player_controller.just_grabbed() and not anchor.is_holding():
 		if interactor.is_selected():
+			if not Tutorial.has_grabbed:
+				grabbed_bone_first.emit()
+				Tutorial.has_grabbed = true
 			anchor.grab_holdable(interactor.selected_holdable)
 
 

@@ -1,5 +1,5 @@
 class_name Hurtbox
-## Recieves damage
+## Receives damage
 extends Area2D
 
 signal hitbox_entered(hitbox: Hitbox)

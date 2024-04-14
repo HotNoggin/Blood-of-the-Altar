@@ -309,7 +309,6 @@ script = ExtResource("8_tiooc")
 
 [node name="HurtEffect" type="GPUParticles2D" parent="Visuals"]
 modulate = Color(0.972549, 0.0705882, 0.0705882, 1)
-position = Vector2(0, 4)
 emitting = false
 amount = 16
 process_material = ExtResource("7_284v5")

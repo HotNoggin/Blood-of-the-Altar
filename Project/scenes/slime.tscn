@@ -62,6 +62,7 @@ script = ExtResource("1_xmciy")
 death_effect = NodePath("OnceEffect")
 death_sound = ExtResource("7_wi1ni")
 hitbox = NodePath("Hitbox")
+die_on_contact = true
 animator = NodePath("Visuals/AnimationPlayer")
 visuals = NodePath("Visuals")
 hurtbox = NodePath("Hurtbox")
@@ -111,6 +112,3 @@ process_material = ExtResource("5_v5m5x")
 lifetime = 0.4
 explosiveness = 1.0
 script = ExtResource("5_2u6kf")
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_wi1ni")

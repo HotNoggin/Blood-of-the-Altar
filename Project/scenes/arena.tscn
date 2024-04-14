@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cuht163fmkxpu"]
+[gd_scene load_steps=19 format=3 uid="uid://cuht163fmkxpu"]
 
 [ext_resource type="PackedScene" uid="uid://nwffwt5ijfkn" path="res://scenes/player.tscn" id="1_2bthp"]
 [ext_resource type="TileSet" uid="uid://cn568n6j2tt13" path="res://resources/arena_tileset.tres" id="1_6skdb"]
@@ -8,6 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://dfuknvjvs8t" path="res://scenes/slime.tscn" id="4_3eoi1"]
 [ext_resource type="PackedScene" uid="uid://b74303q1slpey" path="res://scenes/skull.tscn" id="5_cl7mm"]
 [ext_resource type="Material" uid="uid://cnoxrtkaixbtt" path="res://resources/arena_particles.tres" id="5_n4m3o"]
+[ext_resource type="Script" path="res://scripts/tutorial.gd" id="9_8pcq3"]
+[ext_resource type="PackedScene" uid="uid://4iqcnlvhqnl1" path="res://scenes/dummy.tscn" id="10_cqwsm"]
+[ext_resource type="Texture2D" uid="uid://cyrenupc6l0fn" path="res://assets/graphics/title.png" id="11_pj4ek"]
+[ext_resource type="Texture2D" uid="uid://jivn4c5e35gb" path="res://assets/graphics/keyboard_controls.png" id="12_cum7x"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_grla1"]
 size = Vector2(384, 216)
@@ -31,6 +35,16 @@ distance = -104.0
 distance = -32.0
 
 [node name="Arena" type="Node2D"]
+
+[node name="Tutorial" type="Node" parent="." node_paths=PackedStringArray("label", "spawners", "title", "graphic", "player")]
+script = ExtResource("9_8pcq3")
+label = NodePath("../View/UI/Label")
+spawners = NodePath("../View/Spawners")
+title = NodePath("../Title")
+graphic = NodePath("../Controller Prompt")
+controller_image = ExtResource("12_cum7x")
+keyboard_image = ExtResource("12_cum7x")
+player = NodePath("../View/Player")
 
 [node name="View" type="Sprite2D" parent="."]
 clip_children = 1
@@ -91,25 +105,52 @@ initial_time = 0.0
 wait_time = 4.0
 
 [node name="SkullSpawner2D" type="Marker2D" parent="View/Spawners"]
-position = Vector2(-208, -64)
+position = Vector2(0, -120)
 script = ExtResource("3_eblnm")
 scene = ExtResource("5_cl7mm")
-initial_time = 24.0
-wait_time = 12.0
-
-[node name="SkullSpawner2D2" type="Marker2D" parent="View/Spawners"]
-position = Vector2(208, -64)
-script = ExtResource("3_eblnm")
-scene = ExtResource("5_cl7mm")
-initial_time = 32.0
-wait_time = 12.0
+initial_time = 12.0
+wait_time = 6.0
 
 [node name="Altar" parent="View" instance=ExtResource("3_ky7m4")]
 position = Vector2(0, 24)
 
 [node name="Player" parent="View" instance=ExtResource("1_2bthp")]
-position = Vector2(0, 16)
+position = Vector2(0, 23.75)
+
+[node name="Dummy" parent="View" instance=ExtResource("10_cqwsm")]
+position = Vector2(-88, 24)
+spawn_range = 0.0
 
 [node name="Camera2D" type="Camera2D" parent="View"]
 zoom = Vector2(3, 3)
 script = ExtResource("1_gf2ql")
+
+[node name="UI" type="CanvasLayer" parent="View"]
+layer = 0
+
+[node name="Label" type="Label" parent="View/UI"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.198
+anchor_right = 0.5
+anchor_bottom = 0.198
+offset_left = -20.0
+offset_top = -2.70401
+offset_right = 20.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.913725, 0.878431, 0.666667, 1)
+theme_override_font_sizes/font_size = 27
+text = "Lo-Fi beats to kick monsters and make sacrifices to"
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Sprite2D" parent="."]
+position = Vector2(0, -32)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("11_pj4ek")
+
+[node name="Controller Prompt" type="Sprite2D" parent="."]
+position = Vector2(0, 72)
+texture = ExtResource("12_cum7x")

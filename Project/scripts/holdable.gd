@@ -8,6 +8,7 @@ extends Area2D
 @export var velocity: float = -3
 
 @export var time_to_live: float = 8
+@export var use_infinite_lifetime: bool = false
 
 var _time_alive: float = 0
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cx80drhe3xbl3"]
 
-[ext_resource type="Script" path="res://scripts/bone.gd" id="1_aahcp"]
+[ext_resource type="Script" path="res://scripts/holdable.gd" id="1_rehjr"]
 [ext_resource type="Texture2D" uid="uid://bc3tpcm4eh75f" path="res://assets/graphics/bone.png" id="2_1yjkm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xdo2x"]
@@ -8,7 +8,7 @@
 [node name="Bone" type="Area2D"]
 collision_layer = 32
 collision_mask = 2
-script = ExtResource("1_aahcp")
+script = ExtResource("1_rehjr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_xdo2x")
