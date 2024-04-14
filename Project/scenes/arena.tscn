@@ -74,6 +74,7 @@ lifetime = 10.0
 preprocess = 10.0
 
 [node name="Spawners" type="Node2D" parent="View"]
+process_mode = 4
 
 [node name="SlimeSpawner2D" type="Marker2D" parent="View/Spawners"]
 position = Vector2(-208, 24)

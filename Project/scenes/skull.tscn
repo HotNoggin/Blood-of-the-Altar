@@ -10,6 +10,21 @@
 [ext_resource type="Material" uid="uid://byxjhvjatnj80" path="res://resources/splat_particles.tres" id="7_7p8o6"]
 [ext_resource type="Script" path="res://scripts/once_effect.gd" id="8_d2o2e"]
 
+[sub_resource type="Animation" id="Animation_8q3xm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_6kjko"]
 resource_name = "float"
 loop_mode = 1
@@ -24,21 +39,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0, -1), Vector2(0, 1), Vector2(0, -1)]
-}
-
-[sub_resource type="Animation" id="Animation_8q3xm"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_46fvs"]
