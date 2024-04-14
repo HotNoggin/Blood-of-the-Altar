@@ -8,5 +8,12 @@ func _ready():
 	finished.connect(queue_free)
 
 
-func play():
+func play() -> void:
 	emitting = true
+
+
+func duplicate_and_play() -> OnceEffect:
+	var new_effect: OnceEffect = duplicate() as OnceEffect
+	add_sibling(new_effect)
+	new_effect.play()
+	return new_effect

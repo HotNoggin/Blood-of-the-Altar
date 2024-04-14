@@ -5,12 +5,18 @@ extends Area2D
 @export var item_offset: float = 8
 @export var fall_gravity: float = 15
 @export var bounce_multiple: float = 0.8
-@export var velocity: float = 2
+@export var velocity: float = -3
+
+
+func _ready():
+	if position.y >= floor_height - item_offset:
+		position.y = floor_height - item_offset
 
 
 func _physics_process(delta):
 	if not is_held():
 		fall_and_bounce(delta)
+
 
 ## Called when the holdable is picked up
 func grab() -> void:
@@ -19,7 +25,7 @@ func grab() -> void:
 
 ## Called when the hodable is dropped
 func drop() -> void:
-	pass
+	velocity = -3
 
 
 func is_held() -> bool:

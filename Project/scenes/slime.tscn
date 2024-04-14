@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://dfuknvjvs8t"]
 
 [ext_resource type="Texture2D" uid="uid://c3iajl3xx0g0" path="res://assets/graphics/slime.png" id="1_4xnw8"]
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_44hh0"]
+[ext_resource type="Script" path="res://scripts/slime.gd" id="1_xmciy"]
 [ext_resource type="Script" path="res://scripts/hitbox.gd" id="3_7co1q"]
 [ext_resource type="PackedScene" uid="uid://cx80drhe3xbl3" path="res://scenes/bone.tscn" id="3_d2oay"]
 [ext_resource type="Script" path="res://scripts/hurtbox.gd" id="4_tcn50"]
@@ -56,11 +56,12 @@ size = Vector2(16, 10)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ri3uv"]
 size = Vector2(10, 6)
 
-[node name="Slime" type="CharacterBody2D" node_paths=PackedStringArray("effect", "animator", "visuals", "hurtbox")]
+[node name="Slime" type="CharacterBody2D" node_paths=PackedStringArray("death_effect", "hitbox", "animator", "visuals", "hurtbox")]
 collision_layer = 4
-script = ExtResource("1_44hh0")
-effect = NodePath("OnceEffect")
-sound = ExtResource("7_wi1ni")
+script = ExtResource("1_xmciy")
+death_effect = NodePath("OnceEffect")
+death_sound = ExtResource("7_wi1ni")
+hitbox = NodePath("Hitbox")
 animator = NodePath("Visuals/AnimationPlayer")
 visuals = NodePath("Visuals")
 hurtbox = NodePath("Hurtbox")
@@ -84,7 +85,7 @@ shape = SubResource("RectangleShape2D_8jgm7")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 10
 script = ExtResource("3_7co1q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
@@ -93,7 +94,7 @@ shape = SubResource("RectangleShape2D_oexd7")
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 10
 script = ExtResource("4_tcn50")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]

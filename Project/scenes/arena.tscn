@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://cuht163fmkxpu"]
+[gd_scene load_steps=14 format=3 uid="uid://cuht163fmkxpu"]
 
 [ext_resource type="PackedScene" uid="uid://nwffwt5ijfkn" path="res://scenes/player.tscn" id="1_2bthp"]
 [ext_resource type="TileSet" uid="uid://cn568n6j2tt13" path="res://resources/arena_tileset.tres" id="1_6skdb"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="1_gf2ql"]
+[ext_resource type="Script" path="res://scripts/enemy_spawner_2d.gd" id="3_eblnm"]
 [ext_resource type="PackedScene" uid="uid://b4k24c558s21b" path="res://scenes/altar.tscn" id="3_ky7m4"]
 [ext_resource type="PackedScene" uid="uid://dfuknvjvs8t" path="res://scenes/slime.tscn" id="4_3eoi1"]
 [ext_resource type="Material" uid="uid://cnoxrtkaixbtt" path="res://resources/arena_particles.tres" id="5_n4m3o"]
@@ -34,50 +35,65 @@ distance = -32.0
 clip_children = 1
 texture = SubResource("PlaceholderTexture2D_grla1")
 
-[node name="Camera2D" type="Camera2D" parent="View"]
-zoom = Vector2(3, 3)
-script = ExtResource("1_gf2ql")
+[node name="Level" type="Node2D" parent="View"]
 
-[node name="Player Bounds" type="StaticBody2D" parent="View"]
+[node name="Player Bounds" type="StaticBody2D" parent="View/Level"]
 collision_layer = 16
 collision_mask = 2
 
-[node name="Bottom" type="CollisionShape2D" parent="View/Player Bounds"]
+[node name="Bottom" type="CollisionShape2D" parent="View/Level/Player Bounds"]
 shape = SubResource("WorldBoundaryShape2D_gq6d5")
 
-[node name="Left" type="CollisionShape2D" parent="View/Player Bounds"]
+[node name="Left" type="CollisionShape2D" parent="View/Level/Player Bounds"]
 shape = SubResource("WorldBoundaryShape2D_fr2ub")
 
-[node name="Right" type="CollisionShape2D" parent="View/Player Bounds"]
+[node name="Right" type="CollisionShape2D" parent="View/Level/Player Bounds"]
 shape = SubResource("WorldBoundaryShape2D_f1dja")
 
-[node name="Top" type="CollisionShape2D" parent="View/Player Bounds"]
+[node name="Top" type="CollisionShape2D" parent="View/Level/Player Bounds"]
 shape = SubResource("WorldBoundaryShape2D_4muyr")
 
-[node name="Ground" type="StaticBody2D" parent="View"]
+[node name="Ground" type="StaticBody2D" parent="View/Level"]
 collision_mask = 14
 
-[node name="Bottom" type="CollisionShape2D" parent="View/Ground"]
+[node name="Bottom" type="CollisionShape2D" parent="View/Level/Ground"]
 shape = SubResource("WorldBoundaryShape2D_ubr1r")
 
-[node name="TileMap" type="TileMap" parent="View"]
+[node name="TileMap" type="TileMap" parent="View/Level"]
 tile_set = ExtResource("1_6skdb")
 format = 2
 layer_0/tile_data = PackedInt32Array(131060, 65536, 0, 131061, 65536, 0, 131064, 65536, 0, 131067, 65536, 0, 131070, 65536, 0, 131071, 65536, 0, 65539, 65536, 0, 65542, 65536, 0, 65543, 65536, 0, 65545, 65536, 0, 65547, 65536, 0, 196596, 0, 0, 196597, 0, 0, 196598, 0, 0, 196599, 0, 0, 196600, 0, 0, 196601, 0, 0, 196602, 0, 0, 196603, 0, 0, 196604, 0, 0, 196605, 0, 0, 196606, 0, 0, 196607, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 131083, 0, 0)
 
-[node name="Altar" parent="View" instance=ExtResource("3_ky7m4")]
-position = Vector2(0, 24)
-
-[node name="Slime" parent="View" instance=ExtResource("4_3eoi1")]
-position = Vector2(-72, 24)
-
-[node name="Player" parent="View" instance=ExtResource("1_2bthp")]
-position = Vector2(0, 16)
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="View"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="View/Level"]
 modulate = Color(0.972549, 0.0705882, 0.0705882, 1)
 position = Vector2(0, -48)
 amount = 80
 process_material = ExtResource("5_n4m3o")
 lifetime = 10.0
 preprocess = 10.0
+
+[node name="Spawners" type="Node2D" parent="View"]
+
+[node name="SlimeSpawner2D" type="Marker2D" parent="View/Spawners"]
+position = Vector2(-208, 24)
+script = ExtResource("3_eblnm")
+scene = ExtResource("4_3eoi1")
+initial_time = 0.0
+wait_time = 2.0
+
+[node name="SlimeSpawner2D2" type="Marker2D" parent="View/Spawners"]
+position = Vector2(208, 24)
+script = ExtResource("3_eblnm")
+scene = ExtResource("4_3eoi1")
+initial_time = 0.0
+wait_time = 2.0
+
+[node name="Altar" parent="View" instance=ExtResource("3_ky7m4")]
+position = Vector2(0, 24)
+
+[node name="Player" parent="View" instance=ExtResource("1_2bthp")]
+position = Vector2(0, 16)
+
+[node name="Camera2D" type="Camera2D" parent="View"]
+zoom = Vector2(3, 3)
+script = ExtResource("1_gf2ql")

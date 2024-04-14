@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var visuals: Node2D
 @export var hurtbox: Hurtbox
 @export var loot_drop: PackedScene
+@export var drop_chance: float = 0.5
 
 
 func play_safe(animation: String) -> void:
@@ -19,7 +20,12 @@ func play_effect_as_sibling(effect: OnceEffect) -> void:
 	effect.play()
 
 
-func drop_loot() -> void:
+func drop_loot(force_drop: bool = false) -> void:
+	var chance_is_true: bool = randf_range(0.0, 1.0) <= drop_chance
+	
+	if (not force_drop) and (not chance_is_true):
+		return
+	
 	if loot_drop:
 		if not loot_drop.can_instantiate():
 			return

@@ -14,5 +14,6 @@ script = ExtResource("1_aahcp")
 shape = SubResource("CircleShape2D_xdo2x")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 2
 texture = ExtResource("2_1yjkm")
 flip_h = true

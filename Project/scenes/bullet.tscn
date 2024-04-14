@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://ypgmn5rl227g"]
+
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_21np6"]
+[ext_resource type="Script" path="res://scripts/hitbox.gd" id="1_sd5k4"]
+[ext_resource type="Texture2D" uid="uid://cns7yevfp37qu" path="res://assets/graphics/bullet.png" id="2_32s17"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ae4r6"]
+
+[node name="Bullet" type="Node2D"]
+script = ExtResource("1_21np6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_32s17")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 10
+collision_mask = 4
+script = ExtResource("1_sd5k4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_ae4r6")

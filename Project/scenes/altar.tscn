@@ -1,14 +1,73 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4k24c558s21b"]
+[gd_scene load_steps=11 format=3 uid="uid://b4k24c558s21b"]
 
+[ext_resource type="Script" path="res://scripts/altar.gd" id="1_ped2u"]
 [ext_resource type="Texture2D" uid="uid://df01m687n5uo6" path="res://assets/graphics/altar.png" id="1_xxbb1"]
+[ext_resource type="AudioStream" uid="uid://b8bkdxv6ln814" path="res://assets/audio/sacrifice.wav" id="2_s051c"]
+[ext_resource type="Material" uid="uid://b5lutnngprnqm" path="res://resources/altar_particles.tres" id="3_2ad5j"]
+[ext_resource type="AudioStream" uid="uid://d40pwxre505n" path="res://assets/audio/death.wav" id="3_2igyc"]
+[ext_resource type="Script" path="res://scripts/once_effect.gd" id="3_iwk1e"]
+[ext_resource type="Material" uid="uid://byxjhvjatnj80" path="res://resources/splat_particles.tres" id="5_2mv7r"]
+[ext_resource type="Script" path="res://scripts/player_team_hurtbox.gd" id="5_64cc5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6et5x"]
 size = Vector2(24, 16)
 
-[node name="Altar" type="Area2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_er2av"]
+size = Vector2(10, 6)
+
+[node name="Altar" type="Area2D" node_paths=PackedStringArray("hurtbox", "sacrifice_effect", "hurt_effect", "death_effect", "sprite")]
+collision_layer = 8
+collision_mask = 38
+script = ExtResource("1_ped2u")
+hurtbox = NodePath("AltarHurtbox")
+sacrifice_effect = NodePath("SacrificeEffect")
+hurt_effect = NodePath("HurtEffect")
+death_effect = NodePath("DeathEffect")
+sprite = NodePath("Sprite2D")
+sacrifice_sound = ExtResource("2_s051c")
+death_sound = ExtResource("3_2igyc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xxbb1")
+hframes = 2
+vframes = 2
+frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_6et5x")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_xxbb1")
+[node name="AltarHurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("5_64cc5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AltarHurtbox"]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_er2av")
+
+[node name="SacrificeEffect" type="GPUParticles2D" parent="."]
+modulate = Color(0.972549, 0.0705882, 0.0705882, 1)
+emitting = false
+amount = 40
+process_material = ExtResource("3_2ad5j")
+explosiveness = 0.4
+script = ExtResource("3_iwk1e")
+
+[node name="HurtEffect" type="GPUParticles2D" parent="."]
+modulate = Color(0.972549, 0.0705882, 0.0705882, 1)
+position = Vector2(0, 4)
+emitting = false
+amount = 16
+process_material = ExtResource("5_2mv7r")
+lifetime = 0.4
+explosiveness = 1.0
+script = ExtResource("3_iwk1e")
+
+[node name="DeathEffect" type="GPUParticles2D" parent="."]
+modulate = Color(0.972549, 0.0705882, 0.0705882, 1)
+emitting = false
+amount = 1000
+process_material = ExtResource("5_2mv7r")
+lifetime = 2.0
+one_shot = true
+script = ExtResource("3_iwk1e")
