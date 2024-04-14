@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://scripts/dummy.gd" id="1_815jt"]
 [ext_resource type="Texture2D" uid="uid://dp0togksujxkw" path="res://assets/graphics/dummy.png" id="2_3c41n"]
 [ext_resource type="AudioStream" uid="uid://bpmlw2a3nfa1p" path="res://assets/audio/crunch.wav" id="2_mugnk"]
+[ext_resource type="PackedScene" uid="uid://dtx8upd0c36r4" path="res://scenes/tutorial_bone.tscn" id="3_6aobq"]
 [ext_resource type="Script" path="res://scripts/hurtbox.gd" id="3_nvaju"]
-[ext_resource type="PackedScene" uid="uid://cx80drhe3xbl3" path="res://scenes/bone.tscn" id="3_tuqjt"]
 [ext_resource type="Script" path="res://scripts/hitbox.gd" id="4_grb0d"]
 [ext_resource type="Material" uid="uid://byxjhvjatnj80" path="res://resources/splat_particles.tres" id="5_3kkcj"]
 [ext_resource type="Script" path="res://scripts/once_effect.gd" id="6_yfcfu"]
@@ -136,7 +136,7 @@ hitbox = NodePath("Hitbox")
 animator = NodePath("Visuals/AnimationPlayer")
 visuals = NodePath("Visuals")
 hurtbox = NodePath("Hurtbox")
-loot_drop = ExtResource("3_tuqjt")
+loot_drop = ExtResource("3_6aobq")
 drop_chance = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

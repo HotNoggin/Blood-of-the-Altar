@@ -23,6 +23,10 @@ func _physics_process(delta):
 		modulate.a = 1
 	else:
 		fall_and_bounce(delta)
+		
+		if use_infinite_lifetime:
+			return
+		
 		_time_alive += delta
 		modulate.a = lerp(1, 0, _time_alive / time_to_live)
 		if _time_alive > time_to_live:
