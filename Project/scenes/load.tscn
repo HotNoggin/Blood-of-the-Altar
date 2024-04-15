@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b21u6xog76rmo"]
+[gd_scene load_steps=9 format=3 uid="uid://b21u6xog76rmo"]
 
 [ext_resource type="Script" path="res://scripts/load.gd" id="1_v3n7p"]
 [ext_resource type="Theme" uid="uid://ddqr3lgp5lfdu" path="res://resources/default_theme.tres" id="2_0wbg6"]
@@ -7,10 +7,11 @@
 [ext_resource type="Material" uid="uid://dqj6qbrohkcjc" path="res://resources/puff_particles.tres" id="4_8h85a"]
 [ext_resource type="Material" uid="uid://b5lutnngprnqm" path="res://resources/altar_particles.tres" id="5_3s5rq"]
 [ext_resource type="Material" uid="uid://721gadk5tch" path="res://resources/flame_particles.tres" id="6_fv6jj"]
+[ext_resource type="Material" uid="uid://bwyh2l6yp3uox" path="res://resources/boom_particles.tres" id="7_r1qj5"]
 
 [node name="Load" type="Node2D"]
 script = ExtResource("1_v3n7p")
-process_materials = Array[ParticleProcessMaterial]([ExtResource("2_s4do3"), ExtResource("3_5arlp"), ExtResource("4_8h85a"), ExtResource("5_3s5rq"), ExtResource("6_fv6jj")])
+process_materials = Array[ParticleProcessMaterial]([ExtResource("2_s4do3"), ExtResource("3_5arlp"), ExtResource("4_8h85a"), ExtResource("5_3s5rq"), ExtResource("6_fv6jj"), ExtResource("7_r1qj5")])
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

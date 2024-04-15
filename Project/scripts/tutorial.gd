@@ -14,6 +14,7 @@ static var has_sacrificed: bool = false
 @export var controller_image: Texture2D
 @export var keyboard_image: Texture2D
 @export var player: Player
+@export var player_scene: PackedScene
 
 var tween: Tween
 
@@ -34,7 +35,6 @@ func _process(_delta):
 func do_tutorial():
 	# Fade out title, hide text, deactivate player
 	graphic.modulate = Color.TRANSPARENT
-	Player.instance.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	label.text = ""
 	await get_tree().create_timer(2).timeout
@@ -43,7 +43,7 @@ func do_tutorial():
 		title, "modulate", Color.TRANSPARENT, 1.2).finished
 		
 	# Activate player
-	Player.instance.process_mode = Node.PROCESS_MODE_INHERIT
+	Altar.instance.summon(player_scene)
 	
 	# Skip tutorial
 	if has_sacrificed:

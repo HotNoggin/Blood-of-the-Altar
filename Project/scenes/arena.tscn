@@ -37,7 +37,7 @@ distance = -32.0
 
 [node name="Arena" type="Node2D"]
 
-[node name="Tutorial" type="Node" parent="." node_paths=PackedStringArray("label", "spawners", "title", "graphic", "player")]
+[node name="Tutorial" type="Node" parent="." node_paths=PackedStringArray("label", "spawners", "title", "graphic")]
 script = ExtResource("9_8pcq3")
 label = NodePath("../View/UI/Label")
 spawners = NodePath("../View/Spawners")
@@ -45,7 +45,7 @@ title = NodePath("../Title")
 graphic = NodePath("../Controller Prompt")
 controller_image = ExtResource("12_cum7x")
 keyboard_image = ExtResource("12_cum7x")
-player = NodePath("../View/Player")
+player_scene = ExtResource("1_2bthp")
 
 [node name="View" type="Sprite2D" parent="."]
 clip_children = 1
@@ -130,8 +130,15 @@ wait_time = 6.0
 position = Vector2(0, -120)
 script = ExtResource("3_eblnm")
 scene = ExtResource("5_cl7mm")
-initial_time = 63.0
-wait_time = 6.0
+initial_time = 61.5
+wait_time = 3.0
+
+[node name="SkullSpawner2D3" type="Marker2D" parent="View/Spawners"]
+position = Vector2(0, -120)
+script = ExtResource("3_eblnm")
+scene = ExtResource("5_cl7mm")
+initial_time = 43.0
+wait_time = 3.0
 
 [node name="DrillSpawner2D" type="Marker2D" parent="View/Spawners"]
 position = Vector2(0, 128)
@@ -148,9 +155,6 @@ wait_time = 1.0
 
 [node name="Altar" parent="View" instance=ExtResource("3_ky7m4")]
 position = Vector2(0, 24)
-
-[node name="Player" parent="View" instance=ExtResource("1_2bthp")]
-position = Vector2(-40, 24)
 
 [node name="Dummy" parent="View" instance=ExtResource("10_cqwsm")]
 position = Vector2(-88, 24)

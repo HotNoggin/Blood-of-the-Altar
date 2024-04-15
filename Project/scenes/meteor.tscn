@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=3 uid="uid://ciogbp0vflwq7"]
+
+[ext_resource type="Script" path="res://scripts/meteor.gd" id="1_dule2"]
+[ext_resource type="AudioStream" uid="uid://dmtg0u0fa1fny" path="res://assets/audio/drill.wav" id="2_n1j03"]
+[ext_resource type="Texture2D" uid="uid://dxk1uc1kfgml0" path="res://assets/graphics/meteor.png" id="2_npcyt"]
+[ext_resource type="AudioStream" uid="uid://n8qnrwcg2af6" path="res://assets/audio/boom.wav" id="3_nx3wv"]
+[ext_resource type="Material" uid="uid://bwyh2l6yp3uox" path="res://resources/boom_particles.tres" id="3_r17gj"]
+[ext_resource type="Script" path="res://scripts/once_effect.gd" id="4_7jtp1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dgb0j"]
+radius = 16.0312
+
+[node name="Meteor" type="Area2D" node_paths=PackedStringArray("effect")]
+collision_layer = 8
+collision_mask = 68
+script = ExtResource("1_dule2")
+effect = NodePath("OnceEffect")
+sound = ExtResource("2_n1j03")
+bounce_sound = ExtResource("3_nx3wv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dgb0j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_npcyt")
+
+[node name="OnceEffect" type="GPUParticles2D" parent="."]
+modulate = Color(0.913725, 0.878431, 0.666667, 1)
+amount = 30
+process_material = ExtResource("3_r17gj")
+explosiveness = 1.0
+script = ExtResource("4_7jtp1")

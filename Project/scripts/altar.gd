@@ -32,22 +32,24 @@ func _ready():
 
 func sacrifice(item: Holdable) -> void:
 	if is_instance_valid(item):
-		# Remove the holdable and do effects
+		# Remove the holdable
 		item.queue_free()
-		sacrifice_effect.duplicate_and_play()
-		OnceSound.new_sibling(self, sacrifice_sound).play()
-		
 		# Tutorial update
 		if not Tutorial.has_sacrificed:
 			Player.instance.sacrificed_first.emit()
 			Tutorial.has_sacrificed = true
-		
 		# Summon a random scene
 		if not scene_pool.is_empty():
-			var node_instance: Node2D
-			node_instance = (scene_pool.pick_random() as PackedScene).instantiate() as Node2D
-			add_sibling(node_instance)
-			node_instance.global_position = global_position
+			summon(scene_pool.pick_random())
+
+
+func summon(scene: PackedScene) -> void:
+	var node_instance: Node2D
+	node_instance = scene.instantiate() as Node2D
+	add_sibling(node_instance)
+	node_instance.global_position = global_position
+	sacrifice_effect.duplicate_and_play()
+	OnceSound.new_sibling(self, sacrifice_sound).play()
 
 
 func hurt() -> void:

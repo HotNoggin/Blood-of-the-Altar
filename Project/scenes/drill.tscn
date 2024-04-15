@@ -8,6 +8,21 @@
 [ext_resource type="Script" path="res://scripts/hitbox.gd" id="8_w3fx2"]
 [ext_resource type="Script" path="res://scripts/hurtbox.gd" id="9_p1nab"]
 
+[sub_resource type="Animation" id="Animation_13m1b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_x0252"]
 resource_name = "drill"
 length = 0.4
@@ -23,21 +38,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
-}
-
-[sub_resource type="Animation" id="Animation_13m1b"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_knhww"]
@@ -72,6 +72,7 @@ loot_drop = ExtResource("3_euamk")
 drop_chance = 1.0
 
 [node name="Visuals" type="Node2D" parent="."]
+z_index = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="Visuals"]
 texture = ExtResource("2_x04d5")
