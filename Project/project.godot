@@ -86,6 +86,7 @@ grab={
 2d_physics/layer_4="Altar"
 2d_physics/layer_5="Bounds"
 2d_physics/layer_6="Holdable"
+2d_physics/layer_7="Player Only Enemy"
 
 [rendering]
 

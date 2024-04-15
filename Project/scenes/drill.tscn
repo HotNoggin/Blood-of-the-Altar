@@ -1,0 +1,116 @@
+[gd_scene load_steps=14 format=3 uid="uid://dgwwnymx1ttn7"]
+
+[ext_resource type="Script" path="res://scripts/drill.gd" id="1_yccsp"]
+[ext_resource type="Texture2D" uid="uid://dcvt7tjwcx7x1" path="res://assets/graphics/drill.png" id="2_x04d5"]
+[ext_resource type="PackedScene" uid="uid://cx80drhe3xbl3" path="res://scenes/bone.tscn" id="3_euamk"]
+[ext_resource type="Material" uid="uid://byxjhvjatnj80" path="res://resources/splat_particles.tres" id="6_0yw6t"]
+[ext_resource type="Script" path="res://scripts/once_effect.gd" id="7_shcbe"]
+[ext_resource type="Script" path="res://scripts/hitbox.gd" id="8_w3fx2"]
+[ext_resource type="Script" path="res://scripts/hurtbox.gd" id="9_p1nab"]
+
+[sub_resource type="Animation" id="Animation_x0252"]
+resource_name = "drill"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_13m1b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_knhww"]
+_data = {
+"RESET": SubResource("Animation_13m1b"),
+"drill": SubResource("Animation_x0252")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8jgm7"]
+size = Vector2(12, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_42ubl"]
+resource_local_to_scene = true
+size = Vector2(10, 7)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6kwt8"]
+resource_local_to_scene = true
+size = Vector2(16, 19)
+
+[node name="Drill" type="CharacterBody2D" node_paths=PackedStringArray("death_effect", "hitbox", "animator", "visuals", "hurtbox")]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_yccsp")
+death_effect = NodePath("OnceEffect")
+gravity = -30.0
+hitbox = NodePath("Hitbox")
+die_on_contact = true
+animator = NodePath("Visuals/AnimationPlayer")
+visuals = NodePath("Visuals")
+hurtbox = NodePath("Hurtbox")
+loot_drop = ExtResource("3_euamk")
+drop_chance = 1.0
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("2_x04d5")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals"]
+libraries = {
+"": SubResource("AnimationLibrary_knhww")
+}
+autoplay = "drill"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_8jgm7")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 2
+script = ExtResource("8_w3fx2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_42ubl")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 10
+script = ExtResource("9_p1nab")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_6kwt8")
+
+[node name="OnceEffect" type="GPUParticles2D" parent="."]
+modulate = Color(0.972549, 0.0705882, 0.0705882, 1)
+position = Vector2(0, 4)
+emitting = false
+amount = 16
+process_material = ExtResource("6_0yw6t")
+lifetime = 0.4
+explosiveness = 1.0
+script = ExtResource("7_shcbe")

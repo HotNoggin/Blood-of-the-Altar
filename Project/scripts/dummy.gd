@@ -3,7 +3,7 @@ extends Enemy
 @export var spawn_range: float = 64
 
 
-func _enemy_ready():
+func _spawn_in():
 	position.x += randf_range(-spawn_range, spawn_range)
 
 

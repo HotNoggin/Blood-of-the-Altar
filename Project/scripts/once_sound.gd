@@ -12,3 +12,9 @@ static func new_sibling(node: Node, sound: AudioStream) -> OnceSound:
 	node.add_sibling(once_sound)
 	once_sound.stream = sound
 	return once_sound
+
+
+func duplicate_and_play() -> void:
+	var once_sound: OnceSound = duplicate()
+	add_sibling(once_sound)
+	once_sound.play()

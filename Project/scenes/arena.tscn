@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cuht163fmkxpu"]
+[gd_scene load_steps=20 format=3 uid="uid://cuht163fmkxpu"]
 
 [ext_resource type="PackedScene" uid="uid://nwffwt5ijfkn" path="res://scenes/player.tscn" id="1_2bthp"]
 [ext_resource type="TileSet" uid="uid://cn568n6j2tt13" path="res://resources/arena_tileset.tres" id="1_6skdb"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://4iqcnlvhqnl1" path="res://scenes/dummy.tscn" id="10_cqwsm"]
 [ext_resource type="Texture2D" uid="uid://cyrenupc6l0fn" path="res://assets/graphics/title.png" id="11_pj4ek"]
 [ext_resource type="Texture2D" uid="uid://jivn4c5e35gb" path="res://assets/graphics/keyboard_controls.png" id="12_cum7x"]
+[ext_resource type="PackedScene" uid="uid://dgwwnymx1ttn7" path="res://scenes/drill.tscn" id="12_iwb1w"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_grla1"]
 size = Vector2(384, 216)
@@ -132,11 +133,24 @@ scene = ExtResource("5_cl7mm")
 initial_time = 63.0
 wait_time = 6.0
 
+[node name="DrillSpawner2D" type="Marker2D" parent="View/Spawners"]
+position = Vector2(0, 128)
+script = ExtResource("3_eblnm")
+scene = ExtResource("12_iwb1w")
+wait_time = 1.0
+
+[node name="DrillSpawner2D2" type="Marker2D" parent="View/Spawners"]
+position = Vector2(0, 128)
+script = ExtResource("3_eblnm")
+scene = ExtResource("12_iwb1w")
+initial_time = 14.0
+wait_time = 1.0
+
 [node name="Altar" parent="View" instance=ExtResource("3_ky7m4")]
 position = Vector2(0, 24)
 
 [node name="Player" parent="View" instance=ExtResource("1_2bthp")]
-position = Vector2(0, 23.75)
+position = Vector2(-40, 24)
 
 [node name="Dummy" parent="View" instance=ExtResource("10_cqwsm")]
 position = Vector2(-88, 24)
