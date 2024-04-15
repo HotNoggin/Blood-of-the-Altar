@@ -69,7 +69,7 @@ animator = NodePath("Visuals/AnimationPlayer")
 visuals = NodePath("Visuals")
 hurtbox = NodePath("Hurtbox")
 loot_drop = ExtResource("3_euamk")
-drop_chance = 1.0
+drop_chance = 0.75
 
 [node name="Visuals" type="Node2D" parent="."]
 z_index = 1
