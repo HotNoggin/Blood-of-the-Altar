@@ -38,6 +38,8 @@ var look_direction: int:
 func _ready():
 	instance = self
 	
+	ScoreTimer.reset_time_this_round()
+	
 	# Cooldown animation after a kick
 	animator.animation_finished.connect(func(animation_name):
 		if animation_name == "kick":

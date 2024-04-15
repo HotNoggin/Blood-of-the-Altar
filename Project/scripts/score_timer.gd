@@ -5,6 +5,10 @@ static var best_time: float = 0.0
 static var time_this_round: float = 0.0
 
 
+static func reset_time_this_round() -> void:
+	time_this_round = 0
+
+
 static func update_best() -> float:
 	if time_this_round > best_time:
 		best_time = time_this_round
