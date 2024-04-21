@@ -10,11 +10,13 @@ config_version=5
 
 [application]
 
-config/name="Ludum Dare 55"
+config/name="Blood of the Altar"
+config/description="An arena fighting game where you protect an altar, and summon assistance by sacrificing the bones of your enemies."
 config/tags=PackedStringArray("active", "jame_jam")
 run/main_scene="res://scenes/load.tscn"
 config/features=PackedStringArray("4.2")
 run/max_fps=30
+config/icon="res://assets/graphics/meteor.png"
 
 [autoload]
 
